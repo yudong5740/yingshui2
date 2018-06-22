@@ -1,6 +1,6 @@
 <view class="contains">
-    <view class="page_yd" bindtouchstart="touchImgstart"  bindtouchend="touchImgend" bindlongtap="onLongTrap">
-         <canvas class="canvas" style="width:100%;height:{{canvasH}}px" canvas-id="myCanvas"></canvas>
+    <view class="page_yd" bindtouchstart="touchImgstart"  bindtouchend="touchImgend" bindlongtap="onLongTrap" style='height:300px;background:black'>
+         <canvas class="canvas" style="width:{{canvasW}}px;height:{{canvasH}}px;margin-left:{{(trueWidth-canvasW)/2}}px;margin-top:{{(300-canvasH)/2}}px" canvas-id="myCanvas"></canvas>
          <view class="bg_btn"  wx:if="{{!bg_BTNS}}">
              <image src="../../images/shuiyin.jpg"></image>
          </view>
@@ -11,7 +11,7 @@
              <text>水印文字 :</text> 
            </view>
            <view class="section_content" >
-               <input class="content_input" placeholder="请输入内容"  maxlength="20" value="{{inputWord}}" auto-focus bindinput="bindKeyInput"  />
+               <input class="content_input" placeholder="请输入内容"  maxlength="20" value="{{inputWord}}" auto-focus bindinput="bindKeyInput" style='background:red'  />
            </view>
         </view>  
         <view class="section">

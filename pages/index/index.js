@@ -23,20 +23,25 @@ var Config = {
 };
 Page({ 
   data: {
-    canvasW: 100,    
+    canvasW: 0,    
     canvasH: 300,  
     focus: false,
     inputValue: '', 
     currentColorIndex: 0,
     saves:0,
     savesOhter:"",
-    nubs:0
+    nubs:0,
+    leftWidth:0,
+    topHeigth:0
+  //  300-canvasH)/2
+  //(trueWidth-canvasW)/2
   },
   getUserInfo: function (e) {
     //重新登录
     console.log(e.detail.userInfo)
   },
   onReady: function (event) {
+    this.data.canvasW = wx.getSystemInfoSync().windowWidth
     this.getDefaultConfig();
   },
   getDefaultConfig:function(){
@@ -116,15 +121,49 @@ Page({
           src: res1.tempFilePaths[0],     
           success: function (res) {
             var imgW = res.width,   
-                imgH = res.height;     
-            var windowWidth = wx.getSystemInfoSync().windowWidth;    
-            var scale = windowWidth / imgW;   
-            var canvasHeight = windowWidth * imgH / imgW;   
+              imgH = res.height;
+            var windowWidth = wx.getSystemInfoSync().windowWidth;
+            var windowWidths = wx.getSystemInfoSync().windowWidth;    
+            var scale = windowWidth / imgW;
+            var ratio=0,
+              maxHeight=300,
+              maxWidth = windowWidth,
+              width = imgW,
+              height = imgH;
+            var canvasHeight = 300; 
+            if (height > maxHeight && width > maxWidth){
+              if ((height - maxHeight) >= (width - maxWidth)){
+                if (height > maxHeight) {
+                  ratio = maxHeight / height; // 计算缩放比例 
+                  windowWidth = imgW * ratio
+                }
+              }else{
+                if (width > maxWidth) {
+                  ratio = maxWidth / width;   // 计算缩放比例
+                  canvasHeight = height * ratio
+                }
+              }
+            }else{
+              if (height > maxHeight) {
+                ratio = maxHeight / height; // 计算缩放比例 
+                windowWidth = imgW * ratio
+              }
+              if (width > maxWidth) {
+                ratio = maxWidth / width;   // 计算缩放比例
+                canvasHeight = height * ratio
+              }
+            }
+            
+            // var canvasHeight = windowWidth * imgH / imgW;
+           
             that.setData({
-              canvasW: windowWidth,    
-              canvasH: canvasHeight,   
+              canvasW: windowWidth,
+              canvasH: canvasHeight, 
+              leftWidth: (windowWidths - windowWidth)/2,
+              topHeigth: (300 - canvasHeight)/2,  
               imgW: imgW,           
-              imgH: imgH             
+              imgH: imgH,   
+              trueWidth:  windowWidths     
             });
 
             var config = {

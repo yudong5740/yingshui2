@@ -34,9 +34,9 @@ App({
       Context.setFontSize(Config.size);
       Context.rotate(Math.PI / 180 * Config.rotate);
       Context.setGlobalAlpha(Config.opacity);
-      if (Config.scale < 1) {
-        Context.scale(Config.scale, Config.scale);
-      }
+      // if (Config.scale < 1) {
+      //   Context.scale(Config.scale, Config.scale);
+      // }
       that.insertMarks();
       Context.draw();
       resolve();
